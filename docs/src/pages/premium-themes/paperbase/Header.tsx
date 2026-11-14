@@ -1,85 +1,69 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import HelpIcon from '@material-ui/icons/Help';
-import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import HelpIcon from '@mui/icons-material/Help';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
+import MenuIcon from '@mui/icons-material/Menu';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
-const styles = (theme: Theme) =>
-  createStyles({
-    secondaryBar: {
-      zIndex: 0,
-    },
-    menuButton: {
-      marginLeft: -theme.spacing(1),
-    },
-    iconButtonAvatar: {
-      padding: 4,
-    },
-    link: {
-      textDecoration: 'none',
-      color: lightColor,
-      '&:hover': {
-        color: theme.palette.common.white,
-      },
-    },
-    button: {
-      borderColor: lightColor,
-    },
-  });
-
-interface HeaderProps extends WithStyles<typeof styles> {
+interface HeaderProps {
   onDrawerToggle: () => void;
 }
 
-function Header(props: HeaderProps) {
-  const { classes, onDrawerToggle } = props;
+export default function Header(props: HeaderProps) {
+  const { onDrawerToggle } = props;
 
   return (
     <React.Fragment>
       <AppBar color="primary" position="sticky" elevation={0}>
         <Toolbar>
-          <Grid container spacing={1} alignItems="center">
-            <Hidden smUp>
-              <Grid item>
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  onClick={onDrawerToggle}
-                  className={classes.menuButton}
-                >
-                  <MenuIcon />
-                </IconButton>
-              </Grid>
-            </Hidden>
-            <Grid item xs />
-            <Grid item>
-              <Link className={classes.link} href="#" variant="body2">
+          <Grid container spacing={1} sx={{ alignItems: 'center' }}>
+            <Grid sx={{ display: { sm: 'none', xs: 'block' } }}>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={onDrawerToggle}
+                edge="start"
+              >
+                <MenuIcon />
+              </IconButton>
+            </Grid>
+            <Grid size="grow" />
+            <Grid>
+              <Link
+                href="/"
+                variant="body2"
+                sx={{
+                  textDecoration: 'none',
+                  color: lightColor,
+                  '&:hover': {
+                    color: 'common.white',
+                  },
+                }}
+                target="_blank"
+              >
                 Go to docs
               </Link>
             </Grid>
-            <Grid item>
+            <Grid>
               <Tooltip title="Alerts • No alerts">
                 <IconButton color="inherit">
                   <NotificationsIcon />
                 </IconButton>
               </Tooltip>
             </Grid>
-            <Grid item>
-              <IconButton color="inherit" className={classes.iconButtonAvatar}>
+            <Grid>
+              <IconButton color="inherit" sx={{ p: 0.5 }}>
                 <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
               </IconButton>
             </Grid>
@@ -88,24 +72,35 @@ function Header(props: HeaderProps) {
       </AppBar>
       <AppBar
         component="div"
-        className={classes.secondaryBar}
         color="primary"
         position="static"
         elevation={0}
+        sx={{ zIndex: 0 }}
       >
         <Toolbar>
-          <Grid container alignItems="center" spacing={1}>
-            <Grid item xs>
-              <Typography color="inherit" variant="h5" component="h1">
+          <Grid container spacing={1} sx={{ alignItems: 'center' }}>
+            <Grid size="grow">
+              <Typography
+                variant="h5"
+                component="h1"
+                sx={{
+                  color: 'inherit',
+                }}
+              >
                 Authentication
               </Typography>
             </Grid>
-            <Grid item>
-              <Button className={classes.button} variant="outlined" color="inherit" size="small">
+            <Grid>
+              <Button
+                sx={{ borderColor: lightColor }}
+                variant="outlined"
+                color="inherit"
+                size="small"
+              >
                 Web setup
               </Button>
             </Grid>
-            <Grid item>
+            <Grid>
               <Tooltip title="Help">
                 <IconButton color="inherit">
                   <HelpIcon />
@@ -115,22 +110,14 @@ function Header(props: HeaderProps) {
           </Grid>
         </Toolbar>
       </AppBar>
-      <AppBar
-        component="div"
-        className={classes.secondaryBar}
-        color="primary"
-        position="static"
-        elevation={0}
-      >
+      <AppBar component="div" position="static" elevation={0} sx={{ zIndex: 0 }}>
         <Tabs value={0} textColor="inherit">
-          <Tab textColor="inherit" label="Users" />
-          <Tab textColor="inherit" label="Sign-in method" />
-          <Tab textColor="inherit" label="Templates" />
-          <Tab textColor="inherit" label="Usage" />
+          <Tab label="Users" />
+          <Tab label="Sign-in method" />
+          <Tab label="Templates" />
+          <Tab label="Usage" />
         </Tabs>
       </AppBar>
     </React.Fragment>
   );
 }
-
-export default withStyles(styles)(Header);

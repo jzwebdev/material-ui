@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'docs/src/modules/components/Head';
+import { AppLayoutHead as Head } from '@mui/internal-core-docs/AppLayout';
 
 export default function AppTheme(props) {
   const { children } = props;
@@ -16,5 +16,5 @@ export default function AppTheme(props) {
 }
 
 AppTheme.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };

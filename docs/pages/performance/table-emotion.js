@@ -1,22 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import styled from '@emotion/styled';
-import NoSsr from '@material-ui/core/NoSsr';
+// import { styled } from '@mui/material/styles';
+import NoSsr from '@mui/material/NoSsr';
 
 const createComponent = (defaultComponent) => {
-  const MyComponent = React.forwardRef(function MyComponent(props, ref) {
-    const { component: Component = defaultComponent, ...other } = props;
-
-    return <Component ref={ref} {...other} />;
-  });
-
-  MyComponent.propTypes = {
-    component: PropTypes.elementType,
-  };
-
-  return styled(MyComponent)`
+  const Root = styled('div')`
     background: pink;
   `;
+
+  const MyComponent = React.forwardRef(function MyComponent(props, ref) {
+    const { component = defaultComponent, ...other } = props;
+
+    return <Root as={component} ref={ref} {...other} />;
+  });
+
+  return MyComponent;
 };
 
 const Table = createComponent('table');
@@ -28,7 +26,7 @@ const TableBody = createComponent('tbody');
 const data = { name: 'Frozen yoghurt', calories: 159, fat: 6.0, carbs: 24, protein: 4.0 };
 const rows = Array.from(new Array(100)).map(() => data);
 
-function TableEmotion() {
+export default function TableEmotion() {
   return (
     <NoSsr defer>
       <Table>
@@ -58,5 +56,3 @@ function TableEmotion() {
     </NoSsr>
   );
 }
-
-export default TableEmotion;
